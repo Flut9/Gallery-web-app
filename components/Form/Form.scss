@@ -1,0 +1,45 @@
+@import "../../css/vars.scss";
+.form {
+    @media screen and (max-width: 500px){
+        padding: 0 20px;
+    }
+    input, button{
+        padding: 9px;
+        border-radius: 3px;
+        border: none;
+    }
+    input{
+        border: 1px solid $text-gray;
+    }
+    &__name, &__comment{
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 15px;
+    }
+
+    &__name {
+        margin: 30px 0 0 0;
+        @media screen and (max-width: 500px){
+            margin: 15px 0 0 0;
+        }  
+    }
+
+    &__comment {
+        margin: 20px 0 0 0;
+        @media screen and (max-width: 500px){
+            margin: 15px 0 0 0;
+        }  
+    }
+
+    &__submit {
+        margin: 20px 0 0 0;
+        background-color: $blue;
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 15px;
+        color: $white;
+        cursor: pointer;
+    }
+}
