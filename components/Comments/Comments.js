@@ -1,35 +1,40 @@
 class Comments{
 
     async render(){
-        let date = new Date();
         const html = `
-            <ul class="modal__comments comments">
-                <li class="comments__item">
-                    <span class="comments__date">${date.getFullYear()}.${date.getMonth()}.${date.getDate()}</span>
-                    <span class="comments__text">Comment text</span>
-                </li>
-                <li class="comments__item">
-                    <span class="comments__date">16.08.2020</span>
-                    <span class="comments__text">Comment text</span>
-                </li>
-                <li class="comments__item">
-                    <span class="comments__date">16.08.2020</span>
-                    <span class="comments__text">LoremLorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem et illo cupiditate optio praesentium accusamus odio rerum. Eligendi totam cumque tempora, enim tempore vero maxime magnam maiores voluptate tenetur! Non!
-                    Laborum dolor repudiandae iusto quasi illum pariatur aliquid ipsam sapiente molestiae, harum, maiores dolorum perferendis unde veritatis dignissimos. Eius, quasi. Labore, voluptatum? Architecto necessitatibus labore soluta ipsam rem doloribus debitis.
-                    Illo, ut at eius, quo ipsam atque laboriosam deleniti qui recusandae animi sequi quis, quam esse est magnam natus voluptates quibusdam exercitationem. Ratione cupiditate quaerat soluta velit sit voluptatum praesentium!
-                    Sed sunt natus aperiam. Aliquid, vel rerum, beatae inventore doloribus illum ipsam esse dolor aperiam, necessitatibus minima debitis distinctio ad? Velit quis, vero iste recusandae est voluptate praesentium eveniet nihil.</span>
-                </li>
-            </ul>
+            <ul class="modal__comments comments"></ul>
         `
         
         const commentsColumn = document.querySelector('.modal__col_2');
         commentsColumn.innerHTML += html;
 
+        async function getData(){
+            const modalImgId = ROOT_MODAL.querySelector('.modal__img').getAttribute('id');
+
+            let response = await fetch(`https://boiling-refuge-66454.herokuapp.com/images/${modalImgId}`);
+
+            if (!response.ok){
+                throw new Error(`Ошибка по адресу https://boiling-refuge-66454.herokuapp.com/images/${modalImgId}!`);
+            }
+
+            let obj = await response.json();
+            let comments = obj.comments;
+            
+            for (let item of comments){
+                const date = new Date(item.date);
+                ROOT_MODAL.querySelector('.modal__comments').innerHTML += `
+                    <li class="comments__item">
+                        <span class="comments__date">${date.getDate()}.${date.getMonth()}.${date.getFullYear()}</span>
+                        <span class="comments__text">${item.text}</span>
+                    </li>
+                `
+            }
+        } //Получение и вывод комментариев
+
+        getData();
     }
 
-    // async getComments(url){
-        
-    // }
+    
 }
 
 const commentsBlock = new Comments();

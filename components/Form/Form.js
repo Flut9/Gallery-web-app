@@ -20,29 +20,34 @@ class Form{
             text: '',
         }
 
-        // async function sendData(data){
-        //     const modalImgId = ROOT_MODAL.querySelector('img').getAttribute('id');
-        //     let response = await fetch(`https://boiling-refuge-66454.herokuapp.com/images/${modalImgId}/comments`, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json;charset=utf-8'
-        //           },
-        //         body: JSON.stringify(data),
-        //     })
-
-        //     return await response.json();   
-        // } //Отправка комментария
-
-        async function getData(){
+        async function sendData(data){
             const modalImgId = ROOT_MODAL.querySelector('img').getAttribute('id');
+            let response = await fetch(`https://boiling-refuge-66454.herokuapp.com/images/${modalImgId}/comments`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                  },
+                body: JSON.stringify(data),
+            })
 
-            let response = await fetch(`https://boiling-refuge-66454.herokuapp.com/images/${modalImgId}`);
-            let comments = await response.json();
-            console.log(comments.comments);
+            if (!response.ok){
+                throw new Error(`Ошибка по адресу https://boiling-refuge-66454.herokuapp.com/images/${modalImgId}!`);
+            }
 
-            console.log(comments);
-            // return await response.json();
-        }
+            return await response.json();   
+        } //Отправка комментария
+
+        // async function getData(){
+        //     const modalImgId = ROOT_MODAL.querySelector('img').getAttribute('id');
+
+        //     let response = await fetch(`https://boiling-refuge-66454.herokuapp.com/images/${modalImgId}`);
+
+        //     if (!response.ok){
+        //         throw new Error(`Ошибка по адресу https://boiling-refuge-66454.herokuapp.com/images/${modalImgId}!`);
+        //     }
+
+        //     return await response.json();
+        // } //Получение комментариев
 
         submitBtn.addEventListener('click', function(event){
             event.preventDefault();
@@ -51,12 +56,9 @@ class Form{
             
             comment.text = inputComment.value;
             comment.id = ROOT_MODAL.querySelector('.modal__img').getAttribute('id');
-            comment.date = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
-
-            // sendData(comment);
-            // console.log(comment);
-            getData()
-            // console.log(getData());
+            comment.date = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`; 
+            
+            sendData(comment);
         });
 
     }

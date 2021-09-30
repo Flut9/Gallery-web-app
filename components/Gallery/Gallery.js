@@ -24,6 +24,8 @@ class Gallery{
             <div class="gallery__images images"></div>
         `
         ROOT_GALLERY.innerHTML += html;
+
+        this.getResponse();
     }
 
 
@@ -32,4 +34,3 @@ class Gallery{
 
 const galleryBlock = new Gallery();
 galleryBlock.render();
-galleryBlock.getResponse();

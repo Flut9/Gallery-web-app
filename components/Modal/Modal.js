@@ -22,7 +22,6 @@ class Modal{
 
     openModalWindow(event){
         modalBlock.render();
-        commentsBlock.render(); //Рендерим список комментариев в модальном окне
         formBlock.render();  //Рендерим форму в модальном окне
 
         let modalImg = ROOT_MODAL.querySelector('img');
@@ -31,6 +30,8 @@ class Modal{
         ROOT_MODAL.classList.add('active');
         document.body.style.overflowY = 'hidden';
         
+        commentsBlock.render(); //Рендерим список комментариев в модальном окне
+
         const closeBtn = document.querySelector('.modal__close-btn');
         closeBtn.addEventListener('click', modalBlock.closeModalWindow);
     } //Открытие модального окна
